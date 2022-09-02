@@ -5,7 +5,7 @@
 	simultaneously.
 
 	*****************************************************************************************************
-	*												    *											*
+	*												    *											
 	*	CLI Outputs:                                                                                *
 	*	                                                                                            *
 	*	NAME                      READY   STATUS    RESTARTS   AGE                                  *
@@ -51,9 +51,9 @@
 	worker pod is lost.
 
 	*****************************************************************************************************
-	*												    *											*
-	*	CLI Outputs:										    *										*
-	*												    *											*
+	*												    *											
+	*	CLI Outputs:										    *										
+	*												    *											
 	*	[root@ip-172-31-11-65 k8s-specifications]# kubectl get po                                   *
 	*	NAME                      READY   STATUS    RESTARTS   AGE                                  *
 	*	db-b54cd94f4-8rfhw        1/1     Running   0          7m40s                                *
@@ -80,7 +80,7 @@
 	*	vote-94849dc97-pjz9z      1/1     Running       0          9m38s                            *
 	*	worker-dd46d7584-m2nlg    1/1     Running       0          16s                              *
 	*	worker-dd46d7584-vdrvm    1/1     Terminating   0          3m6s                             *
-	*												    *												*
+	*												    *												
 	*****************************************************************************************************
 
 3. Deleting DB pod
@@ -134,9 +134,9 @@
 	statefull applications like Databases as good as it does for stateless applications.
 	
 	*****************************************************************************************************
-	*												    *											*
-	*	CLI Outputs:										    *									*
-	*												    *											*
+	*												    *											
+	*	CLI Outputs:										    *									
+	*												    *											
 	*	[root@ip-172-31-11-65 k8s-specifications]# kubectl delete po result-5d57b59f4b-wr8rz	    *
 	*	pod "result-5d57b59f4b-wr8rz" deleted                                                       *
 	*	^C                                                                                          *
@@ -156,5 +156,5 @@
 	*	result-5d57b59f4b-wr8rz   1/1     Terminating   0          40m                              *
 	*	vote-94849dc97-n26ff      1/1     Running       0          25m                              *
 	*	worker-dd46d7584-m2nlg    1/1     Running       2          30m                              *
-	*												    *											*
+	*												    *											
 	*****************************************************************************************************
