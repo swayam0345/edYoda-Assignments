@@ -1,0 +1,160 @@
+1. Deleting voting pod 
+	The voting web app was loading the page for aroung 20-30 seconds and after that it was working as usual.
+	The result app was showing the older results. For me I was stuck at option dog in voting app, but the
+	result app was showing cat 100%. A new voting app pod was created and the older one was terminating 
+	simultaneously.
+
+	*****************************************************************************************************
+	*												    *											
+	*	CLI Outputs:                                                                                *
+	*	                                                                                            *
+	*	NAME                      READY   STATUS    RESTARTS   AGE                                  *
+	*	db-b54cd94f4-8rfhw        1/1     Running   0          14m                                  *
+	*	redis-868d64d78-rwvl5     1/1     Running   0          14m                                  *
+	*	result-5d57b59f4b-wr8rz   1/1     Running   0          14m                                  *
+	*	vote-94849dc97-mr9jl      1/1     Running   0          47s                                  *
+	*	worker-dd46d7584-m2nlg    1/1     Running   0          5m35s                                *
+	*	[root@ip-172-31-11-65 k8s-specifications]# kubectl delete po vote-94849dc97-mr9jl           *
+	*	pod "vote-94849dc97-mr9jl" deleted                                                          *
+	*	^C                                                                                          *
+	*		                                                                                    *
+	*	[root@ip-172-31-11-65 k8s-specifications]# kubectl get po                                   *
+	*	NAME                      READY   STATUS        RESTARTS   AGE                              *
+	*	db-b54cd94f4-8rfhw        1/1     Running       0          15m                              *
+	*	redis-868d64d78-rwvl5     1/1     Running       0          15m                              *
+	*	result-5d57b59f4b-wr8rz   1/1     Running       0          15m                              *
+	*	vote-94849dc97-mr9jl      1/1     Terminating   0          90s                              *
+	*	vote-94849dc97-n26ff      1/1     Running       0          32s                              *
+	*	worker-dd46d7584-m2nlg    1/1     Running       0          6m18s                            *
+	*	[root@ip-172-31-11-65 k8s-specifications]# kubectl get po                                   *
+	*	NAME                      READY   STATUS        RESTARTS   AGE                              *
+	*	db-b54cd94f4-8rfhw        1/1     Running       0          15m                              *
+	*	redis-868d64d78-rwvl5     1/1     Running       0          15m                              *
+	*	result-5d57b59f4b-wr8rz   1/1     Running       0          15m                              *
+	*	vote-94849dc97-mr9jl      0/1     Terminating   0          94s                              *
+	*	vote-94849dc97-n26ff      1/1     Running       0          36s                              *
+	*	worker-dd46d7584-m2nlg    1/1     Running       0          6m22s                            *
+	*	[root@ip-172-31-11-65 k8s-specifications]# kubectl get po                                   *
+	*	NAME                      READY   STATUS    RESTARTS   AGE                                  *
+	*	db-b54cd94f4-8rfhw        1/1     Running   0          17m                                  *
+	*	redis-868d64d78-rwvl5     1/1     Running   0          17m                                  *
+	*	result-5d57b59f4b-wr8rz   1/1     Running   0          17m                                  *
+	*	vote-94849dc97-n26ff      1/1     Running   0          116s                                 *
+	*	worker-dd46d7584-m2nlg    1/1     Running   0          7m42s                                *
+	*                                                                                                   *
+	*****************************************************************************************************
+
+
+
+2. Deleting worker pod
+	Doesn't affect anything. A new worker pod was created after a few seconds. Also all the log data of older 
+	worker pod is lost.
+
+	*****************************************************************************************************
+	*												    *											
+	*	CLI Outputs:										    *										
+	*												    *											
+	*	[root@ip-172-31-11-65 k8s-specifications]# kubectl get po                                   *
+	*	NAME                      READY   STATUS    RESTARTS   AGE                                  *
+	*	db-b54cd94f4-8rfhw        1/1     Running   0          7m40s                                *
+	*	redis-868d64d78-rwvl5     1/1     Running   0          7m40s                                *
+	*	result-5d57b59f4b-wr8rz   1/1     Running   0          7m40s                                *
+	*	vote-94849dc97-pjz9z      1/1     Running   0          7m40s                                *
+	*	worker-dd46d7584-vdrvm    1/1     Running   0          68s                                  *
+	*	[root@ip-172-31-11-65 k8s-specifications]# kubectl delete po worker-dd46d7584-vdrvm         *
+	*	pod "worker-dd46d7584-vdrvm" deleted                                                        *
+	*	^C                                                                                          *
+	*	[root@ip-172-31-11-65 k8s-specifications]# kubectl get po                                   *
+	*	NAME                      READY   STATUS              RESTARTS   AGE                        *
+	*	db-b54cd94f4-8rfhw        1/1     Running             0          9m28s                      *
+	*	redis-868d64d78-rwvl5     1/1     Running             0          9m28s                      *
+	*	result-5d57b59f4b-wr8rz   1/1     Running             0          9m28s                      *
+	*	vote-94849dc97-pjz9z      1/1     Running             0          9m28s                      *
+	*	worker-dd46d7584-m2nlg    0/1     ContainerCreating   0          6s                         *
+	*	worker-dd46d7584-vdrvm    1/1     Terminating         0          2m56s                      *
+	*	[root@ip-172-31-11-65 k8s-specifications]# kubectl get po                                   *
+	*	NAME                      READY   STATUS        RESTARTS   AGE                              *
+	*	db-b54cd94f4-8rfhw        1/1     Running       0          9m38s                            *
+	*	redis-868d64d78-rwvl5     1/1     Running       0          9m38s                            *
+	*	result-5d57b59f4b-wr8rz   1/1     Running       0          9m38s                            *
+	*	vote-94849dc97-pjz9z      1/1     Running       0          9m38s                            *
+	*	worker-dd46d7584-m2nlg    1/1     Running       0          16s                              *
+	*	worker-dd46d7584-vdrvm    1/1     Terminating   0          3m6s                             *
+	*												    *												
+	*****************************************************************************************************
+
+3. Deleting DB pod
+	Deleting the DB pod results in a restart of the worker pod and creation of a new DB pod. But as soon as the new
+	DB pod is running the result app wan't working.
+
+	*****************************************************************************************************
+	*	                                                                                            *
+	*	CLI Outputs:                                                                                *
+	*	                                                                                            *
+	*	[root@ip-172-31-11-65 k8s-specifications]# kubectl get po                                   *
+	*	NAME                      READY   STATUS    RESTARTS   AGE                                  *
+	*	db-b54cd94f4-8kvpn        1/1     Running   0          2m48s                                *
+	*	redis-868d64d78-rwvl5     1/1     Running   0          26m                                  *
+	*	result-5d57b59f4b-wr8rz   1/1     Running   0          26m                                  *
+	*	vote-94849dc97-n26ff      1/1     Running   0          11m                                  *
+	*	worker-dd46d7584-m2nlg    1/1     Running   1          17m                                  *
+	*	[root@ip-172-31-11-65 k8s-specifications]# kubectl delete po db-b54cd94f4-8kvpn             *
+	*	pod "db-b54cd94f4-8kvpn" deleted                                                            *
+	*	^C                                                                                          *
+	*	[root@ip-172-31-11-65 k8s-specifications]# kubectl get po                                   *
+	*	NAME                      READY   STATUS              RESTARTS   AGE                        *
+	*	db-b54cd94f4-7hzzg        0/1     ContainerCreating   0          4s                         *
+	*	db-b54cd94f4-8kvpn        1/1     Terminating         0          3m6s                       *
+	*	redis-868d64d78-rwvl5     1/1     Running             0          26m                        *
+	*	result-5d57b59f4b-wr8rz   1/1     Running             0          26m                        *
+	*	vote-94849dc97-n26ff      1/1     Running             0          11m                        *
+	*	worker-dd46d7584-m2nlg    1/1     Running             1          17m                        *
+	*	[root@ip-172-31-11-65 k8s-specifications]# kubectl get po                                   *
+	*	NAME                      READY   STATUS    RESTARTS   AGE                                  *
+	*	db-b54cd94f4-7hzzg        1/1     Running   0          72s                                  *
+	*	redis-868d64d78-rwvl5     1/1     Running   0          28m                                  *
+	*	result-5d57b59f4b-wr8rz   1/1     Running   0          28m                                  *
+	*	vote-94849dc97-n26ff      1/1     Running   0          12m                                  *
+	*	worker-dd46d7584-m2nlg    1/1     Running   2          18m                                  *
+	*                                                                                                   *
+	*                                                                                                   *
+	*****************************************************************************************************
+	
+	
+4. Making the result app work
+	The above(3) issue was due to a code in "result/server.js" file;
+	socket.on('subscribe', function (data) {
+		socket.join(data.channel);
+	});
+	This piece of code is making a physical connection with the DB. So, when we are deleting the DB pod this connection
+	is lost as the socket value is present no more. Deleting the result pod will solve this problem as a new physical
+	connection will be established between the new result pod and the DB pod.
+	
+	After the restart is done the data stored in the older DB pod is lost. This is because Kubernetes isn't able to	maintain
+	statefull applications like Databases as good as it does for stateless applications.
+	
+	*****************************************************************************************************
+	*												    *											
+	*	CLI Outputs:										    *									
+	*												    *											
+	*	[root@ip-172-31-11-65 k8s-specifications]# kubectl delete po result-5d57b59f4b-wr8rz	    *
+	*	pod "result-5d57b59f4b-wr8rz" deleted                                                       *
+	*	^C                                                                                          *
+	*	[root@ip-172-31-11-65 k8s-specifications]# kubectl get po                                   *
+	*	NAME                      READY   STATUS              RESTARTS   AGE                        *
+	*	db-b54cd94f4-7hzzg        1/1     Running             0          12m                        *
+	*	redis-868d64d78-rwvl5     1/1     Running             0          39m                        *
+	*	result-5d57b59f4b-jmxlt   0/1     ContainerCreating   0          7s                         *
+	*	result-5d57b59f4b-wr8rz   1/1     Terminating         0          39m                        *
+	*	vote-94849dc97-n26ff      1/1     Running             0          24m                        *
+	*	worker-dd46d7584-m2nlg    1/1     Running             2          30m                        *
+	*	[root@ip-172-31-11-65 k8s-specifications]# kubectl get po                                   *
+	*	NAME                      READY   STATUS        RESTARTS   AGE                              *
+	*	db-b54cd94f4-7hzzg        1/1     Running       0          13m                              *
+	*	redis-868d64d78-rwvl5     1/1     Running       0          40m                              *
+	*	result-5d57b59f4b-jmxlt   1/1     Running       0          29s                              *
+	*	result-5d57b59f4b-wr8rz   1/1     Terminating   0          40m                              *
+	*	vote-94849dc97-n26ff      1/1     Running       0          25m                              *
+	*	worker-dd46d7584-m2nlg    1/1     Running       2          30m                              *
+	*												    *											
+	*****************************************************************************************************
