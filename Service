@@ -1,0 +1,7 @@
+1. First we need to check if we are using the public IP to access the application.
+2. The replica set has been deployed in 8000, but the inorder to access the application publicly we need to use the port give by nodePort.
+   # kubectl get svc
+   NAME                        TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)        AGE
+   kubia-nodeport              NodePort    10.100.97.0   <none>        80:30124/TCP   8s
+   
+   nodePort will publicly listen on 30124 port. So, we need to assign this port along with the publlic IP inorder to access the application. 
