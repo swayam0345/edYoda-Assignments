@@ -1,0 +1,9 @@
+1. Set the minReadySeconds as 0 for the replicas.
+   kubectl patch deployment <deployment_name> -p '{"spec":{"minReadySeconds":0}}'
+   kubectl patch deployment kubia -p '{"spec":{"minReadySeconds":0}}' 
+
+2. Updating the images of the deployment pod.
+   kubectl set image deployment <deployment_name> nodejs=<new_image:version>
+   kubectl set image deployment kubia nodejs=luksa/kubia:v2
+   
+When we execute the above commands the container image will get updated.
