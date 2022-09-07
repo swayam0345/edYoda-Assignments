@@ -1,0 +1,7 @@
+Some typical uses of a DaemonSet are:
+  1. running a cluster storage daemon on every node
+  2. running a logs collection daemon on every node
+  3. running a node monitoring daemon on every node
+
+Since, the above operations aren't meant to be deployed in real environment and everytime a new node is created we don't need to assign the above task to it dedicatedly.
+If instead of daemonSet we use replicaSet in these cases, then everytime a new node is created we would need to dedicatedly assign the above tasks to it.
